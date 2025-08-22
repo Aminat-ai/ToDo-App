@@ -1,29 +1,26 @@
-const input = document.querySelector("input");
-const addBtn = document.querySelector("button");
-const list = document.createElement("ul");
-document.body.appendChild(list);
+let totalIncome = 0;
+let totalExpenses = 0;
 
-addBtn.addEventListener("click", () => {
-  const taskText = input.value.trim();
-  if (taskText === "") return;
+function addTransaction() {
+  const type = document.getElementById('type').value;
+  const amount = parseFloat(document.getElementById('amount').value);
+  const desc = document.getElementById('desc').value;
 
-  const li = document.createElement("li");
-  li.textContent = taskText;
+  if (isNaN(amount) || amount <= 0) {alert("Please enter a valid amount.");
+    return;
+  }
 
-  // Toggle completed
-  li.addEventListener("click", () => {
-    li.classList.toggle("completed");
-  });
+  if (type === 'income') {
+    totalIncome += amount;
+  } else {
+    totalExpenses += amount;
+  }
 
-  // Delete button
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "Delete";
-  delBtn.style.marginLeft = "10px";
-  delBtn.addEventListener("click", () => {
-    list.removeChild(li);
-  });
+  document.getElementById('income').textContent = Income: ₦totalIncome.toFixed(2);
+  document.getElementById('expenses').textContent = Expenses: ₦{totalExpenses.toFixed(2)};
+  document.getElementById('balance').textContent = Balance: ₦${(totalIncome - totalExpenses).toFixed(2)};
 
-  li.appendChild(delBtn);
-  list.appendChild(li);
-  input.value = "";
-});
+  // Clear inputs
+  document.getElementById('desc').value = '';
+  document.getElementById('amount').value = '';
+}
